@@ -11,12 +11,12 @@ except ImportError:
     sys.exit(1)
 
 def main():
-    # Set up command-line arguments so Claude can trigger specific actions
+    # Set up command-line arguments so the AI can trigger specific actions
     parser = argparse.ArgumentParser(description="Alpaca Paper Trading CLI for AI")
     parser.add_argument('--portfolio', action='store_true', help="View account balances and open positions")
     parser.add_argument('--action', choices=['buy', 'sell'], help="Action to perform (buy or sell)")
     parser.add_argument('--ticker', type=str, help="Stock ticker symbol (e.g., AAPL)")
-    parser.add_argument('--qty', type=float, help="Quantity of shares to trade")
+    parser.add_argument('--amount', type=float, help="Dollar amount to trade (notional value)")
     
     args = parser.parse_args()
 
@@ -56,6 +56,7 @@ def main():
                     pl_sign = "+" if profit_loss >= 0 else ""
                     print(f"TICKER: {p.symbol}")
                     print(f"  Shares: {p.qty}")
+                    print(f"  Market Value: ${float(p.market_value):.2f}")
                     print(f"  Avg Entry: ${float(p.avg_entry_price):.2f} | Current: ${float(p.current_price):.2f}")
                     print(f"  Total P/L: {pl_sign}${profit_loss:.2f}")
                     print("-" * 20)
@@ -66,14 +67,14 @@ def main():
             sys.exit(1)
 
     # COMMAND: Execute Trade
-    if args.action and args.ticker and args.qty:
+    if args.action and args.ticker and args.amount:
         try:
             side = OrderSide.BUY if args.action == 'buy' else OrderSide.SELL
             
-            # Create a market order
+            # Create a market order using NOTIONAL (dollar amounts) instead of shares
             order_data = MarketOrderRequest(
                 symbol=args.ticker.upper(),
-                qty=args.qty,
+                notional=args.amount,
                 side=side,
                 time_in_force=TimeInForce.DAY # Automatically cancels at end of day if unfilled
             )
@@ -84,7 +85,7 @@ def main():
             print(f"✅ SUCCESS! ORDER SUBMITTED.")
             print(f"Action: {args.action.upper()}")
             print(f"Ticker: {args.ticker.upper()}")
-            print(f"Quantity: {args.qty}")
+            print(f"Amount: ${args.amount:.2f}")
             print(f"Order ID: {order.id}")
             print(f"Status: {order.status.value}")
             return
@@ -97,7 +98,7 @@ def main():
     print("Invalid command. Please specify an action.")
     print("Examples:")
     print("  python trade.py --portfolio")
-    print("  python trade.py --action buy --ticker AAPL --qty 5")
+    print("  python trade.py --action buy --ticker AAPL --amount 500")
 
 if __name__ == "__main__":
     main()
