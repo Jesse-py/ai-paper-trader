@@ -2,7 +2,7 @@ import argparse
 import sys
 
 try:
-    from duckduckgo_search import DDGS
+    from ddgs import DDGS
 except ImportError:
     print("Error: The 'duckduckgo-search' library is not installed.")
     print("The AI must run: pip install duckduckgo-search")
