@@ -1,0 +1,11 @@
+CORE TRADING RULES (v1 - 2026-04-28):
+
+1. POSITION SIZING: Never risk more than 10% of total equity on a single position. Calculate from current equity, not initial.
+
+2. NO CHASING TOPS: Do not BUY any asset with 14-day RSI > 70 (overbought). Wait for RSI to cool below 65 before initiating a new position. Do not buy stocks trading within 1% of their 52-week high.
+
+3. TREND CONFIRMATION: Only buy assets where price is above the 20-day SMA (bullish trend). For oversold buys (RSI < 30), require additional reversal evidence (positive news, bullish candle, volume spike).
+
+4. PROFIT TAKING & RISK MANAGEMENT: Take profits when a position gains 15% or RSI exceeds 75. Cut losses at -8% from entry — no exceptions, no averaging down on losers.
+
+5. DIVERSIFICATION: Maximum 3 positions in any single sector. Avoid stacking concentrated bets in mega-cap tech when the broader index (SPY) is itself overbought.
